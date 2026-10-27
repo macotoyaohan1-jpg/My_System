@@ -1,0 +1,1408 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+:root {
+    --purple-dark: #5d245c;
+    --purple: #8d3f7c;
+    --purple-light: #b875a5;
+    --white: #ffffff;
+    --text-dark: #4b1747;
+    --error: #ffb4b4;
+    --success: #c8ffd8;
+    --glass: rgba(255, 255, 255, 0.15);
+    --border: rgba(255, 255, 255, 0.32);
+    --shadow: rgba(35, 10, 45, 0.30);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(
+            135deg,
+            rgba(65, 20, 70, 0.35),
+            rgba(120, 40, 100, 0.35)
+        ),
+        url("background.jpg") center / cover no-repeat;
+    overflow: hidden; /* Prevents whole-page scrolling */
+}
+
+/* =========================================================
+   AUTH WRAPPER (Sliding Door Container)
+   ========================================================= */
+
+.auth-wrapper {
+    position: relative;
+    width: min(1100px, 94vw);
+    height: 85vh;
+    max-height: 750px;
+    min-height: 550px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 70px rgba(25, 5, 35, 0.40);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+/* =========================================================
+   VISUAL PANEL (CENTER / EXPANDING CORE)
+   ========================================================= */
+
+.visual-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(
+        145deg,
+        rgba(143, 75, 127, 0.92),
+        rgba(103, 39, 89, 0.88)
+    );
+    transition: transform 0.6s ease-in-out;
+    z-index: 3;
+    will-change: transform;
+}
+
+/* Shift visual panel to the right side when toggled */
+.auth-wrapper.show-register .visual-panel {
+    transform: translateX(100%);
+}
+
+/* =========================================================
+   VISUAL CONTENT & ORBITS
+   ========================================================= */
+
+.visual-content {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.infinity-logo {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.main-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.visual-content h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    margin-bottom: 8px;
+}
+
+.visual-content > p {
+    max-width: 380px;
+    margin: 0 auto 20px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.visual-circle, .orbit-area {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 15px auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+.visual-circle::before {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+/* Custom styling for the figure replacement */
+.hirono-figure {
+    position: relative;
+    z-index: 3;
+    height: 140px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    border-radius: 50%;
+}
+
+.orbit-one {
+    width: 220px;
+    height: 80px;
+    transform: rotate(25deg);
+}
+
+.orbit-two {
+    width: 80px;
+    height: 220px;
+    transform: rotate(-25deg);
+}
+
+.orbit-three {
+    width: 170px;
+    height: 170px;
+}
+
+.visual-content h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.visual-content h3 + p,
+.visual-bottom {
+    margin: 0 auto;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.visual-switch-button {
+    min-width: 150px;
+    margin-top: 22px;
+    padding: 11px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+    background: transparent;
+    color: white;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.visual-switch-button:hover {
+    transform: translateY(-2px);
+    background: white;
+    color: var(--purple-dark);
+}
+
+.visual-switch-button:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   SLIDING DOOR FORM PANELS
+   ========================================================= */
+
+.form-panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(65, 25, 70, 0.25);
+    z-index: 2;
+}
+
+/* Login starts on the right and slides left out of view when registering. */
+.login-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    transition:
+        transform 0.6s ease-in-out,
+        opacity 0.4s ease-in-out;
+    will-change: transform, opacity;
+}
+
+.auth-wrapper.show-register .login-panel {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Register starts hidden to the left and slides into the left half. */
+.register-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    padding: 20px 0 !important;
+    height: 100%;
+    max-height: 100%;
+    transition:
+        transform 0.6s ease-in-out,
+        opacity 0.4s ease-in-out;
+    will-change: transform, opacity;
+}
+
+.auth-wrapper.show-register .register-panel {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.auth-wrapper .register-panel {
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+}
+
+.auth-wrapper .register-container {
+    flex-shrink: 0;
+    padding: 20px 0 !important;
+}
+
+/* Standalone register.html page styling */
+.register-page {
+    display: flex;
+    width: min(1100px, 94vw);
+    height: 85vh;
+    max-height: 750px;
+    min-height: 550px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 70px rgba(25, 5, 35, 0.40);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.register-page .register-panel {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    background: rgba(65, 25, 70, 0.25);
+}
+
+.register-visual {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(
+        145deg,
+        rgba(143, 75, 127, 0.92),
+        rgba(103, 39, 89, 0.88)
+    );
+}
+
+/* Logo shown above "Find Your Medicine Nearby" */
+.register-visual .medicine-logo {
+    overflow: hidden;
+}
+
+.register-visual .medicine-logo .main-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* =========================================================
+   FORM CONTAINERS & HEADINGS
+   ========================================================= */
+
+.form-container {
+    width: min(390px, 85%);
+}
+
+.register-container,
+.register-content {
+    border-radius: 25px;
+    width: min(480px, 90%);
+    padding: 0 !important;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    margin-bottom: 4px;
+    text-align: center;
+    color: white;
+    font-size: clamp(1.8rem, 3.5vw, 2.3rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+.form-intro,
+.register-header p {
+    margin-bottom: 8px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 0.8rem;
+}
+
+.register-header {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.register-logo {
+    width: 45px;
+    height: 45px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    color: white;
+    font-size: 1.3rem;
+}
+
+/* =========================================================
+   LOGIN INPUTS
+   ========================================================= */
+
+.input-group {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: 0.2s ease;
+}
+
+.input-group:focus-within {
+    border-color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.07);
+}
+
+.input-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    color: rgba(255, 255, 255, 0.80);
+    pointer-events: none;
+}
+
+.input-group input {
+    width: 100%;
+    height: 100%;
+    padding: 0 55px 0 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* =========================================================
+   REGISTER GRID & INPUT STYLING
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    margin-bottom: 3px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.74rem;
+    font-weight: 500;
+}
+
+/* Direct Input Fields */
+.field > input {
+    width: 100%;
+    height: 35px;
+    padding: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    transition: 0.2s ease;
+}
+
+.field > input:focus {
+    border-color: rgba(255, 255, 255, 0.70);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.07);
+}
+
+.field > input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.field input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Wrapper-based Input Fields */
+.input-wrapper,
+.password-wrapper,
+.register-password-group {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: 0.2s ease;
+}
+
+.input-wrapper:focus-within,
+.password-wrapper:focus-within,
+.register-password-group:focus-within {
+    border-color: rgba(255, 255, 255, 0.70);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.07);
+}
+
+.input-wrapper i,
+.password-wrapper i.password-left-icon,
+.register-password-group > i {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 0.75rem;
+    pointer-events: none;
+}
+
+.input-wrapper input,
+.password-wrapper input,
+.register-password-group input {
+    width: 100%;
+    height: 100%;
+    padding: 0 38px 0 32px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+}
+
+.input-wrapper input::placeholder,
+.password-wrapper input::placeholder,
+.register-password-group input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.register-password-toggle {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.register-password-toggle:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* =========================================================
+   RADIO & CHECKBOX
+   ========================================================= */
+
+.field-full,
+.gender-field {
+    margin-top: 5px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.73rem;
+    cursor: pointer;
+}
+
+.radio-option input {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.60);
+    border-radius: 50%;
+}
+
+.radio-option input:checked {
+    border-color: white;
+    background: radial-gradient(circle, white 0 3px, transparent 4px);
+}
+
+.privacy-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 0.65rem;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.privacy-check input {
+    width: 13px;
+    height: 13px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    accent-color: white;
+}
+
+/* =========================================================
+   BUTTONS & ACTIONS
+   ========================================================= */
+
+.primary-button {
+    width: 100%;
+    height: 46px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7bc8f7, #ae85e4);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 8px 20px rgba(25, 10, 40, 0.18);
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.primary-button:hover,
+.register-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(90deg, #9cd8ff, #bd9ae8);
+    box-shadow: 0 12px 25px rgba(25, 10, 40, 0.25);
+}
+
+/* REGISTER BUTTON ADJUSTMENT */
+.primary-button.register-submit,
+.register-button {
+    width: 100%;
+    margin-top: 10px;
+    height: 42px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7bc8f7, #ae85e4);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 8px 20px rgba(25, 10, 40, 0.18);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    line-height: 1;
+    padding: 0 20px;
+}
+
+.switch-text,
+.back-login {
+    margin-top: 8px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 0.75rem;
+}
+
+.switch-button,
+.back-login a {
+    border: none;
+    background: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.switch-button:hover,
+.back-login a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================
+   SECURITY & PRIVACY NOTICES
+   ========================================================= */
+
+.security-notice,
+.privacy-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.65rem;
+    line-height: 1.4;
+}
+
+.security-notice > i,
+.privacy-notice > i,
+.privacy-icon {
+    color: rgba(255, 255, 255, 0.90);
+    font-size: 0.9rem;
+    margin-top: 1px;
+}
+
+.security-notice strong,
+.privacy-notice h3 {
+    display: block;
+    margin-bottom: 2px;
+    color: white;
+    font-size: 0.73rem;
+}
+
+.security-notice p,
+.privacy-notice p {
+    margin: 0;
+}
+
+/* =========================================================
+   ERRORS & MESSAGES
+   ========================================================= */
+
+.error-message {
+    min-height: 15px;
+    margin: 2px 5px 4px;
+    color: var(--error);
+    font-size: 0.68rem;
+    line-height: 1.2;
+}
+
+.form-error {
+    display: none;
+    margin: 8px 5px;
+    color: var(--error);
+    text-align: center;
+    font-size: 0.73rem;
+    line-height: 1.3;
+}
+
+.form-error:not(:empty) {
+    display: block;
+}
+
+.lockout-status {
+    display: none;
+    margin: 6px 5px 10px;
+    color: #ffd6d6;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.input-error {
+    border-color: rgba(255, 100, 100, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(255, 100, 100, 0.10);
+}
+
+/* =========================================================
+   META ROW & FORGOT PASSWORD MODAL
+   ========================================================= */
+
+.meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 5px 14px;
+    font-size: 0.73rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.remember-me input {
+    width: 13px;
+    height: 13px;
+    accent-color: white;
+}
+
+.forgot-link {
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.90);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.73rem;
+    cursor: pointer;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.forgot-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(20, 10, 40, 0.65);
+    backdrop-filter: blur(8px);
+}
+
+.forgot-overlay.show {
+    display: flex;
+}
+
+.forgot-box {
+    position: relative;
+    width: min(420px, 92vw);
+    padding: 30px 25px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    border-radius: 25px;
+    background: linear-gradient(135deg, rgba(147, 98, 206, 0.50), rgba(72, 55, 135, 0.45));
+    backdrop-filter: blur(15px);
+    box-shadow: 0 25px 60px rgba(20, 5, 40, 0.45);
+    text-align: center;
+}
+
+.close-forgot {
+    position: absolute;
+    top: 12px;
+    right: 13px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    cursor: pointer;
+}
+
+.close-forgot:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: rotate(90deg);
+}
+
+.forgot-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    font-size: 1.3rem;
+}
+
+.forgot-box h2 {
+    color: white;
+    margin-bottom: 6px;
+}
+
+.forgot-description {
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.74rem;
+}
+
+.forgot-input {
+    position: relative;
+    height: 45px;
+}
+
+.forgot-input i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.80);
+}
+
+.forgot-input input {
+    width: 100%;
+    height: 100%;
+    padding: 0 15px 0 42px;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    border-radius: 999px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.forgot-input input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.reset-button {
+    width: 100%;
+    height: 45px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7bc8f7, #ae85e4);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    transform: translateY(-1px);
+}
+
+.reset-message {
+    min-height: 18px;
+    margin-top: 10px;
+    font-size: 0.70rem;
+}
+
+.reset-message.success {
+    color: var(--success);
+}
+
+.back-to-login {
+    margin-top: 8px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.back-to-login:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* =========================================================
+   REGISTER SCROLLBAR (DISABLED)
+   ========================================================= */
+
+.register-panel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Clean card layout with a sliding welcome panel. */
+.auth-wrapper {
+    border: 0;
+    background: #fff;
+    box-shadow: 0 28px 80px rgba(74, 31, 77, 0.22);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.auth-wrapper .visual-panel {
+    border-radius: 26px 190px 190px 26px;
+    background: linear-gradient(145deg, #a55391, #682b67);
+    box-shadow: 0 12px 35px rgba(93, 36, 92, 0.24);
+    transition:
+        transform 0.8s cubic-bezier(0.68, -0.05, 0.27, 1.05),
+        border-radius 0.8s ease;
+    z-index: 3;
+}
+
+.auth-wrapper.show-register .visual-panel {
+    border-radius: 190px 26px 26px 190px;
+}
+
+.auth-wrapper .visual-content {
+    max-width: 410px;
+}
+
+.auth-wrapper .visual-content .infinity-logo {
+    display: flex;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 14px;
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.auth-wrapper .visual-content .visual-circle {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin: 8px auto 14px;
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: inset 0 0 26px rgba(255, 255, 255, 0.08);
+}
+
+.auth-wrapper .visual-content .visual-circle::before {
+    width: 112px;
+    height: 112px;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.auth-wrapper .visual-content .hirono-figure {
+    height: 128px;
+}
+
+.auth-wrapper .visual-content .orbit-one {
+    width: 180px;
+    height: 65px;
+}
+
+.auth-wrapper .visual-content .orbit-two {
+    width: 65px;
+    height: 180px;
+}
+
+.auth-wrapper .visual-content h3 {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.auth-wrapper .visual-content #visualDescription {
+    display: block;
+    margin-bottom: 17px;
+    font-size: 0.76rem;
+}
+
+.auth-wrapper .visual-content h2 {
+    margin-bottom: 10px;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.035em;
+}
+
+.auth-wrapper .visual-content #visualText {
+    max-width: 360px;
+    margin-bottom: 10px;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.auth-wrapper .visual-switch-button {
+    min-width: 160px;
+    margin-top: 0;
+    border-radius: 8px;
+    border-color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+}
+
+.auth-wrapper .visual-switch-button:hover {
+    background: #fff;
+    color: #702d68;
+}
+
+.auth-wrapper .form-panel {
+    background: #fff;
+}
+
+.auth-wrapper .form-panel h1 {
+    color: #202638;
+}
+
+.auth-wrapper .form-intro,
+.auth-wrapper .register-header p {
+    color: #7a8191;
+}
+
+.auth-wrapper .input-group,
+.auth-wrapper .password-wrapper,
+.auth-wrapper .field > input {
+    border: 1px solid #e0e4ed;
+    border-radius: 8px;
+    background: #f5f6fa;
+}
+
+.auth-wrapper .input-group:focus-within,
+.auth-wrapper .password-wrapper:focus-within,
+.auth-wrapper .field > input:focus {
+    border-color: #a55391;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(165, 83, 145, 0.14);
+}
+
+.auth-wrapper .input-icon,
+.auth-wrapper .password-wrapper i.password-left-icon,
+.auth-wrapper .password-toggle,
+.auth-wrapper .register-password-toggle {
+    color: #566075;
+}
+
+.auth-wrapper .input-group input,
+.auth-wrapper .field > input,
+.auth-wrapper .password-wrapper input {
+    color: #202638;
+}
+
+.auth-wrapper .input-group input::placeholder,
+.auth-wrapper .field > input::placeholder,
+.auth-wrapper .password-wrapper input::placeholder {
+    color: #9299a8;
+}
+
+.auth-wrapper .field label,
+.auth-wrapper .privacy-check,
+.auth-wrapper .switch-text,
+.auth-wrapper .back-login,
+.auth-wrapper .meta-row,
+.auth-wrapper .remember-me {
+    color: #555e70;
+}
+
+.auth-wrapper .primary-button,
+.auth-wrapper .register-button {
+    border-radius: 8px;
+    background: linear-gradient(90deg, #8d3f7c, #b875a5);
+    box-shadow: 0 7px 16px rgba(93, 36, 92, 0.18);
+}
+
+.auth-wrapper .primary-button:hover,
+.auth-wrapper .register-button:hover {
+    background: linear-gradient(90deg, #76336d, #a35b91);
+}
+
+.auth-wrapper .switch-button,
+.auth-wrapper .back-login a,
+.auth-wrapper .forgot-link {
+    color: #8d3f7c;
+}
+
+.auth-wrapper .security-notice {
+    border-color: #ead9e8;
+    background: #fbf7fb;
+    color: #71566f;
+}
+
+.auth-wrapper .security-notice > i {
+    flex: 0 0 auto;
+    margin: 1px 2px 0 0;
+    color: #8d3f7c;
+    font-size: 1rem;
+}
+
+.auth-wrapper .security-notice strong {
+    color: #4b1747;
+}
+
+.auth-wrapper .security-notice p {
+    color: #715f70;
+}
+
+.auth-wrapper .register-logo {
+    background: #f5eaf3;
+    color: #8d3f7c;
+}
+
+.auth-wrapper .privacy-check input {
+    accent-color: #8d3f7c;
+}
+
+.auth-wrapper .register-panel {
+    background: #fff;
+}
+
+body:has(.auth-wrapper) {
+    background: linear-gradient(135deg, #fbf2fa, #ead7e9);
+}
+
+@media (max-width: 850px) {
+    .auth-wrapper .visual-content .infinity-logo {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 7px;
+        padding: 5px;
+    }
+
+    .auth-wrapper .visual-content .visual-circle {
+        width: 86px;
+        height: 86px;
+        margin: 4px auto 6px;
+    }
+
+    .auth-wrapper .visual-content .visual-circle::before {
+        width: 62px;
+        height: 62px;
+    }
+
+    .auth-wrapper .visual-content .hirono-figure {
+        height: 72px;
+    }
+
+    .auth-wrapper .visual-content .orbit-one {
+        width: 108px;
+        height: 40px;
+    }
+
+    .auth-wrapper .visual-content .orbit-two {
+        width: 40px;
+        height: 108px;
+    }
+
+    .auth-wrapper .visual-content h3,
+    .auth-wrapper .visual-content #visualDescription {
+        display: none;
+    }
+
+    .auth-wrapper .visual-content #visualText {
+        margin-bottom: 5px;
+    }
+
+    .auth-wrapper .visual-switch-button {
+        min-width: 130px;
+        padding: 8px 18px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 850px) {
+    body {
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .auth-wrapper,
+    .register-page {
+        width: 95vw;
+        height: auto;
+        min-height: auto;
+        max-height: none;
+        flex-direction: column;
+    }
+
+    .visual-panel,
+    .register-visual {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        transform: none !important;
+        border-radius: 30px 30px 0 0;
+    }
+
+    .visual-circle, .orbit-area {
+        width: 100px;
+        height: 100px;
+        margin: 5px auto;
+    }
+
+    .visual-circle::before {
+        width: 70px;
+        height: 70px;
+    }
+
+    .hirono-figure {
+        height: 80px;
+    }
+
+    .orbit-one {
+        width: 120px;
+        height: 45px;
+    }
+
+    .orbit-two {
+        width: 45px;
+        height: 120px;
+    }
+
+    .visual-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .visual-content > p,
+    .visual-content h3,
+    .visual-content h3 + p,
+    .visual-bottom {
+        display: none;
+    }
+
+    .form-panel,
+    .register-page .register-panel {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+    }
+
+    .login-panel {
+        display: flex;
+    }
+
+    .register-panel {
+        display: none;
+    }
+
+    .auth-wrapper.show-register .login-panel {
+        display: none;
+    }
+
+    .auth-wrapper.show-register .register-panel {
+        display: flex;
+    }
+
+    .form-container,
+    .register-container,
+    .register-content {
+        width: 88%;
+        padding: 25px 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+    body {
+        padding: 0;
+    }
+
+    .auth-wrapper,
+    .register-page {
+        width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+
+    .visual-panel,
+    .register-visual {
+        height: 180px;
+        border-radius: 0;
+    }
+
+    .meta-row {
+        font-size: 0.68rem;
+    }
+
+    .radio-group {
+        gap: 12px;
+    }
+}
